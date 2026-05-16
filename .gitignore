@@ -117,3 +117,4 @@ fabric.properties
 *.out
 *.app
 notepad
+test_exceptions

@@ -9,6 +9,7 @@
 #include <QColorDialog>
 #include <QFileDialog>
 #include <QFont>
+#include <QFontDialog>
 #include <QHeaderView>
 #include <QInputDialog>
 #include <QKeySequence>
@@ -154,12 +155,44 @@ void main_window::setup_format_menu()
             editor->mergeCurrentCharFormat(fmt);
         }
     });
+
+    auto* action_font = format_menu->addAction("Font...");
+    connect(action_font, &QAction::triggered, this, [this] {
+        bool ok;
+        QFont font = QFontDialog::getFont(&ok, editor->currentFont(), this, "Choose Font");
+        if (ok) {
+            if (editor->textCursor().hasSelection()) {
+                QTextCharFormat fmt;
+                fmt.setFont(font);
+                editor->mergeCurrentCharFormat(fmt);
+            } else {
+                editor->setFont(font);
+            }
+        }
+    });
 }
 
 void main_window::setup_format_toolbar()
 {
     auto* toolbar = addToolBar("Format");
     toolbar->setIconSize(QSize(16, 16));
+
+    auto* action_font = toolbar->addAction("Font");
+    connect(action_font, &QAction::triggered, this, [this] {
+        bool ok;
+        QFont font = QFontDialog::getFont(&ok, editor->currentFont(), this, "Choose Font");
+        if (ok) {
+            if (editor->textCursor().hasSelection()) {
+                QTextCharFormat fmt;
+                fmt.setFont(font);
+                editor->mergeCurrentCharFormat(fmt);
+            } else {
+                editor->setFont(font);
+            }
+        }
+    });
+
+    toolbar->addSeparator();
 
     auto* action_bold = toolbar->addAction(QIcon("data/images/bold.svg"), "Bold");
     action_bold->setCheckable(true);

@@ -6,6 +6,7 @@
 
 #include <QAction>
 #include <QApplication>
+#include <QColorDialog>
 #include <QFileDialog>
 #include <QFont>
 #include <QHeaderView>
@@ -141,6 +142,18 @@ void main_window::setup_format_menu()
             apply_transform(*transform);
         });
     }
+
+    format_menu->addSeparator();
+
+    auto* action_text_color = format_menu->addAction("Text Color...");
+    connect(action_text_color, &QAction::triggered, this, [this] {
+        const QColor color = QColorDialog::getColor(editor->textColor(), this, "Choose Text Color");
+        if (color.isValid()) {
+            QTextCharFormat fmt;
+            fmt.setForeground(color);
+            editor->mergeCurrentCharFormat(fmt);
+        }
+    });
 }
 
 void main_window::setup_format_toolbar()

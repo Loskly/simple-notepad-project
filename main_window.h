@@ -3,6 +3,7 @@
 
 #include "danger_mode.h"
 #include "text_transform.h"
+#include "spell_checker.h"
 
 #include <QDialog>
 #include <QMainWindow>
@@ -59,6 +60,7 @@ private:
 
     QLabel* stats_label { nullptr };
     std::unique_ptr<danger_mode> danger_manager;
+    std::unique_ptr<spell_checker> speller;
 };
 
 #endif // MAIN_WINDOW_H

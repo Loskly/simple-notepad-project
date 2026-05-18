@@ -51,6 +51,10 @@ main_window::main_window()
     danger_manager = std::make_unique<danger_mode>(editor, this);
     danger_manager->setup_menu(menuBar());
 
+    speller = std::make_unique<spell_checker>();
+    speller->load_dictionary("data/words.txt");
+    speller->attach_to_editor(editor);
+
     update_status_bar();
 }
 
@@ -197,6 +201,13 @@ void main_window::setup_tools_menu()
     const auto* action_word_freq = tools_menu->addAction("Word Frequency...");
     connect(action_word_freq, &QAction::triggered, this, [this] {
         show_word_frequency();
+    });
+
+    tools_menu->addSeparator();
+
+    const auto* action_check_spelling = tools_menu->addAction("Check Spelling...");
+    connect(action_check_spelling, &QAction::triggered, this, [this] {
+        if (speller) speller->check_spelling();
     });
 }
 

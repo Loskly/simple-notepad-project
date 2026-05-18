@@ -16,6 +16,8 @@ qt_add_executable(
     danger_mode.cpp
     text_transform.h
     notepad_exception.h
+    spell_checker.h
+    spell_checker.cpp
     find_replace_dialog.ui
     word_frequency_dialog.ui
 )

@@ -288,7 +288,24 @@ void main_window::update_title()
 
 void main_window::update_status_bar()
 {
+    stats_label = new QLabel(this);
+    statusBar()->addWidget(stats_label);
+    
+    connect(editor, &QTextEdit::textChanged, this, &main_window::update_stats);
+    update_stats();
+
     danger_manager->setup_status_bar(statusBar());
+}
+
+void main_window::update_stats()
+{
+    if (!stats_label) return;
+
+    const QString text = editor->toPlainText();
+    const int words = text.isEmpty() ? 0 : text.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts).length();
+    const int lines = editor->document()->blockCount();
+
+    stats_label->setText(QString("Words: %1 | Lines: %2").arg(words).arg(lines));
 }
 
 void main_window::show_find_replace_dialog()

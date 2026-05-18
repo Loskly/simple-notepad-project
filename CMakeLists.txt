@@ -21,8 +21,3 @@ qt_add_executable(
 )
 target_link_libraries(notepad PRIVATE Qt6::Widgets)
 
-add_executable(
-    test_exceptions
-    test_exceptions.cpp
-    notepad_exception.h
-)

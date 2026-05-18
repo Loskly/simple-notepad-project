@@ -9,6 +9,7 @@
 #include <QString>
 #include <QTextDocument>
 #include <QTextEdit>
+#include <QLabel>
 #include <memory>
 #include <vector>
 
@@ -36,6 +37,7 @@ private:
     void update_title();
 
     void update_status_bar();
+    void update_stats();
 
     void apply_transform(const text_transform& transform) const;
 
@@ -55,6 +57,7 @@ private:
     QDialog* find_replace_dlg { nullptr };
     std::unique_ptr<Ui::find_replace_dialog> find_replace_ui;
 
+    QLabel* stats_label { nullptr };
     std::unique_ptr<danger_mode> danger_manager;
 };
 
